@@ -2,9 +2,9 @@
 
 This is a sample project of [svlint](https://github.com/dalance/svlint) plugin.
 
-# Create plugin
+## Create plugin
 
-svlint plugin is a shared library. So crate-type must be `dylib`.
+svlint plugin is a shared library. So crate-type of `Cargo.toml` must be `dylib`.
 
 ```
 [lib]
@@ -50,7 +50,7 @@ impl Rule for SamplePlugin {
 
 `Rule` must implement `check`, `name`, `hint` and `reason`.
 
-# Usage
+## Usage
 
 svlint can load plugin by `--plugin` option.
 
