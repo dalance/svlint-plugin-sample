@@ -4,11 +4,12 @@ This is a sample project of [svlint](https://github.com/dalance/svlint) plugin.
 
 ## Create plugin
 
-svlint plugin is a shared library. So crate-type of `Cargo.toml` must be `dylib`.
+svlint plugin is a shared library. So crate-type of `Cargo.toml` must be `cdylib`.
+`dylib` can be used also, but it causes too large binary size.
 
 ```
 [lib]
-crate-type = ["dylib"]
+crate-type = ["cdylib"]
 ```
 
 All plugin must have `get_plugin` function to generate `Rule`.
