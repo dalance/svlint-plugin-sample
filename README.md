@@ -12,22 +12,22 @@ svlint plugin is a shared library. So crate-type of `Cargo.toml` must be `cdylib
 crate-type = ["cdylib"]
 ```
 
-All plugin must have `get_plugin` function to generate `Rule`.
+All plugin must have `get_plugin` function to generate `SyntaxRule`.
 
 ```
 #[no_mangle]
-pub extern "C" fn get_plugin() -> *mut dyn Rule {
+pub extern "C" fn get_plugin() -> *mut dyn SyntaxRule {
     let boxed = Box::new(SamplePlugin {});
     Box::into_raw(boxed)
 }
 ```
 
-The lint rule is defined as `Rule` trait.
+The lint rule is defined as `SyntaxRule` trait.
 
 ```
 pub struct SamplePlugin;
 
-impl Rule for SamplePlugin {
+impl SyntaxRule for SamplePlugin {
     fn check(&self, _syntax_tree: &SyntaxTree, node: &RefNode) -> RuleResult {
         match node {
             RefNode::InitialConstruct(_) => RuleResult::Fail,
@@ -49,7 +49,7 @@ impl Rule for SamplePlugin {
 }
 ```
 
-`Rule` must implement `check`, `name`, `hint` and `reason`.
+`SyntaxRule` must implement `check`, `name`, `hint` and `reason`.
 
 ## Usage
 

@@ -1,16 +1,16 @@
 use sv_parser::{NodeEvent, RefNode, SyntaxTree};
 use svlint::config::ConfigOption;
-use svlint::linter::{Rule, RuleResult};
+use svlint::linter::{SyntaxRule, RuleResult};
 
 #[no_mangle]
-pub extern "C" fn get_plugin() -> *mut dyn Rule {
+pub extern "C" fn get_plugin() -> *mut dyn SyntaxRule {
     let boxed = Box::new(SamplePlugin {});
     Box::into_raw(boxed)
 }
 
 pub struct SamplePlugin;
 
-impl Rule for SamplePlugin {
+impl SyntaxRule for SamplePlugin {
     fn check(
         &mut self,
         _syntax_tree: &SyntaxTree,
