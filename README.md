@@ -28,10 +28,10 @@ The lint rule is defined as `SyntaxRule` trait.
 pub struct SamplePlugin;
 
 impl SyntaxRule for SamplePlugin {
-    fn check(&self, _syntax_tree: &SyntaxTree, node: &RefNode) -> RuleResult {
+    fn check(&self, _syntax_tree: &SyntaxTree, node: &RefNode) -> SyntaxRuleResult {
         match node {
-            RefNode::InitialConstruct(_) => RuleResult::Fail,
-            _ => RuleResult::Pass,
+            RefNode::InitialConstruct(_) => SyntaxRuleResult::Fail,
+            _ => SyntaxRuleResult::Pass,
         }
     }
 

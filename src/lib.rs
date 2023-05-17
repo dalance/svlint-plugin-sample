@@ -1,6 +1,6 @@
 use sv_parser::{NodeEvent, RefNode, SyntaxTree};
 use svlint::config::ConfigOption;
-use svlint::linter::{SyntaxRule, RuleResult};
+use svlint::linter::{SyntaxRule, SyntaxRuleResult};
 
 #[no_mangle]
 pub extern "C" fn get_plugin() -> *mut dyn SyntaxRule {
@@ -16,10 +16,10 @@ impl SyntaxRule for SamplePlugin {
         _syntax_tree: &SyntaxTree,
         event: &NodeEvent,
         _config: &ConfigOption,
-    ) -> RuleResult {
+    ) -> SyntaxRuleResult {
         match event {
-            NodeEvent::Enter(RefNode::InitialConstruct(_)) => RuleResult::Fail,
-            _ => RuleResult::Pass,
+            NodeEvent::Enter(RefNode::InitialConstruct(_)) => SyntaxRuleResult::Fail,
+            _ => SyntaxRuleResult::Pass,
         }
     }
 
