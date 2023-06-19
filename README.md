@@ -22,7 +22,7 @@ function which returns the list of rules that it implements.
 ```rust
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn get_plugin() -> Vec<*mut dyn Rule> {
+pub extern "C" fn get_plugin() -> Vec<*mut dyn SyntaxRule> {
     combine_rules!(
         SamplePlugin,
         AnotherPlugin,
@@ -30,22 +30,22 @@ pub extern "C" fn get_plugin() -> Vec<*mut dyn Rule> {
 }
 ```
 
-Rules are defined by the `Rule` trait, see both
+Rules are defined by the `SyntaxRule` trait, see both
 [SamplePlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/sample_plugin.rs)
 and
 [AnotherPlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/another_plugin.rs).
 
 ```rust
-impl Rule for SamplePlugin {
+impl SyntaxRule for SamplePlugin {
     fn check(
         &mut self,
         _syntax_tree: &Tree,
         event: &NodeEvent,
         _config: &ConfigOption,
-    ) -> RuleResult {
+    ) -> SyntaxRuleResult {
         match event {
-            NodeEvent::Enter(RefNode::InitialConstruct(_)) => RuleResult::Fail,
-            _ => RuleResult::Pass,
+            NodeEvent::Enter(RefNode::InitialConstruct(_)) => SyntaxRuleResult::Fail,
+            _ => SyntaxRuleResult::Pass,
         }
     }
 
@@ -63,7 +63,7 @@ impl Rule for SamplePlugin {
 }
 ```
 
-`Rule` must implement `check`, `name`, `hint` and `reason`.
+`SyntaxRule` must implement `check`, `name`, `hint` and `reason`.
 
 
 ## Usage

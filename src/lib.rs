@@ -1,7 +1,7 @@
 mod sample_plugin;
 mod another_plugin;
 
-use svlint::linter::Rule;
+use svlint::linter::SyntaxRule;
 use crate::{
     sample_plugin::SamplePlugin,
     another_plugin::AnotherPlugin,
@@ -9,7 +9,7 @@ use crate::{
 
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn get_plugin() -> Vec<*mut dyn Rule> {
+pub extern "C" fn get_plugin() -> Vec<*mut dyn SyntaxRule> {
     combine_rules!(
         SamplePlugin,
         AnotherPlugin,
@@ -20,7 +20,7 @@ pub extern "C" fn get_plugin() -> Vec<*mut dyn Rule> {
 macro_rules! combine_rules {
     ( $( $x:ty ),* $(,)? ) => {
         {
-            let mut vec: Vec<*mut dyn Rule> = Vec::new();
+            let mut vec: Vec<*mut dyn SyntaxRule> = Vec::new();
             $(
                 let boxed = Box::<$x>::default();
                 vec.push(Box::into_raw(boxed));

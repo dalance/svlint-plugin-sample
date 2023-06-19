@@ -1,20 +1,20 @@
 use sv_parser::{NodeEvent, RefNode, SyntaxTree};
 use svlint::config::ConfigOption;
-use svlint::linter::{Rule, RuleResult};
+use svlint::linter::{SyntaxRule, SyntaxRuleResult};
 
 #[derive(Default)]
 pub struct AnotherPlugin;
 
-impl Rule for AnotherPlugin {
+impl SyntaxRule for AnotherPlugin {
     fn check(
         &mut self,
         _syntax_tree: &SyntaxTree,
         event: &NodeEvent,
         _config: &ConfigOption,
-    ) -> RuleResult {
+    ) -> SyntaxRuleResult {
         match event {
-            NodeEvent::Enter(RefNode::DisableStatementFork(_)) => RuleResult::Fail,
-            _ => RuleResult::Pass,
+            NodeEvent::Enter(RefNode::DisableStatementFork(_)) => SyntaxRuleResult::Fail,
+            _ => SyntaxRuleResult::Pass,
         }
     }
 
