@@ -23,10 +23,10 @@ impl Rule for SamplePlugin {
     }
 
     fn hint(&self, _config: &ConfigOption) -> String {
-        String::from("`initial` is forbidden")
+        String::from("Remove the `initial` process.")
     }
 
     fn reason(&self) -> String {
-        String::from("this is a sample plugin")
+        String::from("This example doesn't like `initial` processes.")
     }
 }

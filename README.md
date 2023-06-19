@@ -2,36 +2,49 @@
 
 This is a sample project of [svlint](https://github.com/dalance/svlint) plugin.
 
-## Create plugin
 
-svlint plugin is a shared library. So crate-type of `Cargo.toml` must be `cdylib`.
-`dylib` can be used also, but it causes too large binary size.
+## Overview
 
-```
+An svlint plugin is a shared library, so the crate type of `Cargo.toml` must
+be `cdylib`.
+Alternatively, `dylib` could be used instead, but it causes the resulting
+binary to be very large.
+
+```toml
 [lib]
 crate-type = ["cdylib"]
 ```
 
-All plugin must have `get_plugin` function to generate `Rule`.
+A plugin project must define a
+[`get_plugin`](https://github.com/dalance/svlint-plugin-sample/blob/master/src/lib.rs#L12)
+function which returns the list of rules that it implements.
 
-```
+```rust
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn get_plugin() -> *mut dyn Rule {
-    let boxed = Box::new(SamplePlugin {});
-    Box::into_raw(boxed)
+pub extern "C" fn get_plugin() -> Vec<*mut dyn Rule> {
+    combine_rules!(
+        SamplePlugin,
+        AnotherPlugin,
+    )
 }
 ```
 
-The lint rule is defined as `Rule` trait.
+Rules are defined by the `Rule` trait, see both
+[SamplePlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/sample_plugin.rs)
+and
+[AnotherPlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/another_plugin.rs).
 
-```
-pub struct SamplePlugin;
-
+```rust
 impl Rule for SamplePlugin {
-    fn check(&self, _syntax_tree: &SyntaxTree, node: &RefNode) -> RuleResult {
-        match node {
-            RefNode::InitialConstruct(_) => RuleResult::Fail,
+    fn check(
+        &mut self,
+        _syntax_tree: &Tree,
+        event: &NodeEvent,
+        _config: &ConfigOption,
+    ) -> RuleResult {
+        match event {
+            NodeEvent::Enter(RefNode::InitialConstruct(_)) => RuleResult::Fail,
             _ => RuleResult::Pass,
         }
     }
@@ -40,21 +53,24 @@ impl Rule for SamplePlugin {
         String::from("sample_plugin")
     }
 
-    fn hint(&self) -> String {
-        String::from("`initial` is forbidden")
+    fn hint(&self, _config: &ConfigOption) -> String {
+        String::from("Remove the `initial` process.")
     }
 
     fn reason(&self) -> String {
-        String::from("this is a sample plugin")
+        String::from("This example doesn't like `initial` processes.")
     }
 }
 ```
 
 `Rule` must implement `check`, `name`, `hint` and `reason`.
 
+
 ## Usage
 
-svlint can load plugin by `--plugin` option.
+Use svlint's `--plugin` option with the shared object produced by `cargo build`
+in this repository (copy from
+`target/(debug|release)/libsvlint_plugin_sample.so`).
 
 ```
 $ svlint --plugin libsvlint_plugin_sample.so test.sv
@@ -66,4 +82,6 @@ Fail: sample_plugin
   |         reason: this is a sample plugin
 ```
 
-The loaded plugin is automatically enabled.
+The loaded plugin is automatically enabled, may be controlled using [special
+comments](https://github.com/dalance/svlint/blob/master/MANUAL.md#textrules-and-syntaxrules-sections),
+and has access to values from configuration options.

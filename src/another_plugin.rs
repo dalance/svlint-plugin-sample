@@ -23,10 +23,10 @@ impl Rule for AnotherPlugin {
     }
 
     fn hint(&self, _config: &ConfigOption) -> String {
-        String::from("`disable fork` is forbidden")
+        String::from("Do not use `disable fork`.")
     }
 
     fn reason(&self) -> String {
-        String::from("this is another plugin")
+        String::from("This example dislikes disable-fork statements.")
     }
 }
