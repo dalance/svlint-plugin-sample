@@ -1,6 +1,6 @@
 # svlint-plugin-sample
 
-This is a sample project of [svlint](https://github.com/dalance/svlint) plugin.
+This is a sample project of [svlint](https://github.com/dalance/svlint) plugins.
 
 
 ## Overview
@@ -31,9 +31,9 @@ pub extern "C" fn get_plugin() -> Vec<*mut dyn SyntaxRule> {
 ```
 
 Rules are defined by the `SyntaxRule` trait, see both
-[SamplePlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/sample_plugin.rs)
+[`src/sample_plugin.rs`](https://github.com/dalance/svlint-plugin-sample/blob/master/src/sample_plugin.rs)
 and
-[AnotherPlugin](https://github.com/dalance/svlint-plugin-sample/blob/master/src/another_plugin.rs).
+[`src/another_plugin.rs`](https://github.com/dalance/svlint-plugin-sample/blob/master/src/another_plugin.rs).
 
 ```rust
 impl SyntaxRule for SamplePlugin {
