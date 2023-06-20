@@ -22,11 +22,13 @@ function which returns the list of rules that it implements.
 ```rust
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn get_plugin() -> Vec<*mut dyn SyntaxRule> {
-    combine_rules!(
-        SamplePlugin,
-        AnotherPlugin,
-    )
+pub extern "C" fn get_plugin() -> Vec<Rule> {
+    let mut ret: Vec<Rule> = Vec::new();
+
+    ret.push(pluginrule!(Syntax, SamplePlugin));
+    ret.push(pluginrule!(Syntax, AnotherPlugin));
+
+    ret
 }
 ```
 
@@ -63,6 +65,7 @@ impl SyntaxRule for SamplePlugin {
 }
 ```
 
+`TextRule` must implement `check`, `name`, `hint` and `reason`.
 `SyntaxRule` must implement `check`, `name`, `hint` and `reason`.
 
 
