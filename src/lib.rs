@@ -38,7 +38,7 @@ mod tests {
             Path::new(cargo_manifest_dir.as_str())
                 .join("target")
                 .join("debug")
-                .join(format!("lib{}.dll", cargo_pkg_name))
+                .join(format!("{}.dll", cargo_pkg_name))
         } else if cfg!(target_os = "macos") {
             Path::new(cargo_manifest_dir.as_str())
                 .join("target")
