@@ -23,12 +23,10 @@ function which returns the list of rules that it implements.
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
 pub extern "C" fn get_plugin() -> Vec<Rule> {
-    let mut ret: Vec<Rule> = Vec::new();
-
-    ret.push(pluginrule!(Syntax, SamplePlugin));
-    ret.push(pluginrule!(Syntax, AnotherPlugin));
-
-    ret
+    pluginrules!(
+        SamplePlugin,
+        AnotherPlugin,
+    )
 }
 ```
 

@@ -15,7 +15,7 @@ crate-type = ["cdylib"]
 # Pin svlint to merge of textrules feature.
 # NOTE: Only for testing new API with CI - NOT FOR MERGING TO `master`!
 # NOTE: Unpin after svlint v0.8.0 is released.
-svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "9463c6d" }
+svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "3a2a5ab" }
 #svlint = { path = "../svlint" }
 #svlint    = "0.7.2"
 sv-parser = "0.13.1"
