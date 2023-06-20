@@ -33,10 +33,23 @@ mod tests {
         let cargo_manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
         let cargo_pkg_name = env::var("CARGO_PKG_NAME").unwrap();
         let cargo_pkg_name = cargo_pkg_name.replace("-", "_");
-        let path = Path::new(cargo_manifest_dir.as_str())
-            .join("target")
-            .join("debug")
-            .join(format!("lib{}.so", cargo_pkg_name));
+
+        let path = if cfg!(target_os = "windows") {
+            Path::new(cargo_manifest_dir.as_str())
+                .join("target")
+                .join("debug")
+                .join(format!("lib{}.dll", cargo_pkg_name))
+        } else if cfg!(target_os = "macos") {
+            Path::new(cargo_manifest_dir.as_str())
+                .join("target")
+                .join("debug")
+                .join(format!("lib{}.dylib", cargo_pkg_name))
+        } else {
+            Path::new(cargo_manifest_dir.as_str())
+                .join("target")
+                .join("debug")
+                .join(format!("lib{}.so", cargo_pkg_name))
+        };
 
         String::from(path.to_str().unwrap())
     }
