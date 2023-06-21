@@ -19,3 +19,4 @@ svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "3a2a5ab" }
 #svlint = { path = "../svlint" }
 #svlint    = "0.7.2"
 sv-parser = "0.13.1"
+regex     = "1" # Only used for the rule "forbidden_regex".

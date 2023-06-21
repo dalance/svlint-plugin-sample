@@ -1,0 +1,12 @@
+module M; // XXX bad text in line/preprocessor comment.
+  always_comb a = b;
+endmodule
+////////////////////////////////////////////////////////////////////////////////
+module M;
+  /* XXX bad text in C-style comment. */
+  always_comb a = b;
+endmodule
+////////////////////////////////////////////////////////////////////////////////
+module M;
+  always_comb a = XXX; // Bad text in identifier.
+endmodule

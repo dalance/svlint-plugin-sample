@@ -1,11 +1,13 @@
 mod sample_plugin;
 mod another_plugin;
+mod forbidden_regex;
 
 use svlint::pluginrules;
-use svlint::linter::{Rule, SyntaxRule};
+use svlint::linter::{Rule, TextRule, SyntaxRule};
 use crate::{
     sample_plugin::SamplePlugin,
     another_plugin::AnotherPlugin,
+    forbidden_regex::ForbiddenRegex,
 };
 
 #[allow(improper_ctypes_definitions)]
@@ -14,8 +16,12 @@ pub extern "C" fn get_plugin() -> Vec<Rule> {
     pluginrules!(
         SamplePlugin,
         AnotherPlugin,
+        ForbiddenRegex,
     )
 }
+
+// Everything ABOVE this line is needed for the plugin to function.
+// Everything BELOW this line is for testing the plugin.
 
 #[cfg(test)]
 mod tests {
