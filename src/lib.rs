@@ -97,7 +97,6 @@ mod tests {
             Ok((syntax_tree, _)) => {
                 // Iterate over nodes in the concrete syntax tree, applying
                 // each syntaxrule to each node in turn.
-
                 for node in syntax_tree.into_iter().event() {
                     for _failed in linter.syntaxrules_check(&syntax_tree, &node) {
                         pass = false;
