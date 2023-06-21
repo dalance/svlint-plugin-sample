@@ -38,6 +38,12 @@ mod tests {
         let cargo_pkg_name = env::var("CARGO_PKG_NAME").unwrap();
         let cargo_pkg_name = cargo_pkg_name.replace("-", "_");
 
+        // See also, the rustc logic for getting the platform-specific library
+        // name using a function called `get_lib_name`:
+        //   https://github.com/rust-lang/rust/blob/67da586efe13aa66eef576ba095e1875ba65fd20/src/tools/compiletest/src/runtest.rs#L83-L99
+        // See also, the cargo logic for getting the platform-specific library
+        // name using a function called `get_lib_filename`:
+        //   https://github.com/rust-lang/cargo/blob/dead4b8740c4b6a8ed5211e37c99cf81d01c3b1c/crates/cargo-test-support/src/paths.rs#L230-L242
         let path = if cfg!(target_os = "windows") {
             Path::new(cargo_manifest_dir.as_str())
                 .join("target")

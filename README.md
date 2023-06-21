@@ -70,8 +70,13 @@ impl SyntaxRule for SamplePlugin {
 ## Usage
 
 Use svlint's `--plugin` option with the shared object produced by `cargo build`
-in this repository (copy from
-`target/(debug|release)/libsvlint_plugin_sample.so`).
+in this repository.
+The shared object can be copied from `target/(debug|release)/`, but note that
+the filename is different on different platforms.
+
+- Linux: `lib<name>.so`
+- MacOS: `lib<name>.dylib`
+- Windows: `<name>.dll`
 
 ```
 $ svlint --plugin libsvlint_plugin_sample.so test.sv
@@ -83,6 +88,7 @@ Fail: sample_plugin
   |         reason: this is a sample plugin
 ```
 
-The loaded plugin is automatically enabled, may be controlled using [special
-comments](https://github.com/dalance/svlint/blob/master/MANUAL.md#textrules-and-syntaxrules-sections),
-and has access to values from configuration options.
+The loaded plugin is automatically enabled, has access to values from svlint's
+TOML configuration, and syntax rules may be controlled using
+[special comments](https://github.com/dalance/svlint/blob/master/MANUAL.md#textrules-and-syntaxrules-sections).
+
