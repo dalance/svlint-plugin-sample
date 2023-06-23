@@ -2,6 +2,7 @@ use sv_parser::{NodeEvent, RefNode, SyntaxTree};
 use svlint::config::ConfigOption;
 use svlint::linter::{Rule, RuleResult};
 
+#[allow(improper_ctypes_definitions)]
 #[no_mangle]
 pub extern "C" fn get_plugin() -> *mut dyn Rule {
     let boxed = Box::new(SamplePlugin {});

@@ -15,6 +15,7 @@ crate-type = ["cdylib"]
 All plugin must have `get_plugin` function to generate `Rule`.
 
 ```
+#[allow(improper_ctypes_definitions)]
 #[no_mangle]
 pub extern "C" fn get_plugin() -> *mut dyn Rule {
     let boxed = Box::new(SamplePlugin {});
