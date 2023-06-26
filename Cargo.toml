@@ -12,11 +12,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-# Pin svlint to merge of textrules feature.
-# NOTE: Only for testing new API with CI - NOT FOR MERGING TO `master`!
-# NOTE: Unpin after svlint v0.8.0 is released.
-svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "420845b" }
 #svlint = { path = "../svlint" }
-#svlint    = "0.7.2"
+svlint    = "0.8.0"
 sv-parser = "0.13.1"
 regex     = "1" # Only used for the rule "forbidden_regex".
