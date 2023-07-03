@@ -14,6 +14,6 @@ crate-type = ["cdylib"]
 [dependencies]
 #svlint = { path = "../svlint" }
 #svlint    = "0.8.0" TODO: Update svlint dependency pin before PR review.
-svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "7a4f5eb" }
+svlint = { git = "https://github.com/DaveMcEwan/svlint.git", rev = "31c793f" }
 sv-parser = "0.13.1"
 regex     = "1" # Only used for the rule "forbidden_regex".

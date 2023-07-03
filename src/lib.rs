@@ -30,7 +30,7 @@ mod tests {
     use std::fs::read_to_string;
     use std::path::{Path, PathBuf};
     use svlint::config::Config;
-    use svlint::linter::Linter;
+    use svlint::linter::{Linter, TextRuleEvent};
     use sv_parser::parse_sv_str;
 
     fn so_path() -> String {
@@ -77,16 +77,16 @@ mod tests {
 
         let mut pass = true;
 
-        // Signal beginning of file to all TextRules.
-        // None *may* be used by rules to reset their internal state.
-        let _ = linter.textrules_check(None, &sv, &0);
+        // Signal beginning of file to all TextRules, which *may* be used
+        // by textrules to reset their internal state.
+        let _ = linter.textrules_check(TextRuleEvent::StartOfFile, &sv, &0);
 
         // Iterate over lines in the file, applying each textrule to each
         // line in turn.
         let text: String = read_to_string(&sv).unwrap();
         let mut beg: usize = 0;
         for line in text.lines() {
-            for _failed in linter.textrules_check(Some(&line), &sv, &beg) {
+            for _failed in linter.textrules_check(TextRuleEvent::Line(&line), &sv, &beg) {
                 pass = false;
             }
 
