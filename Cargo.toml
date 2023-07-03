@@ -12,5 +12,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-svlint    = "0.7.2"
+#svlint = { path = "../svlint" }
+svlint    = "0.8.0"
 sv-parser = "0.13.1"
+regex     = "1" # Only used for the rule "forbidden_regex".
