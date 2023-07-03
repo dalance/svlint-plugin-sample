@@ -10,9 +10,15 @@ pub struct ForbiddenRegex {
 impl TextRule for ForbiddenRegex {
     fn check(
         &mut self,
-        line: &str,
+        line: Option<&str>,
         _option: &ConfigOption,
     ) -> TextRuleResult {
+        let line: &str = if line.is_none() {
+            return TextRuleResult::Pass;
+        } else {
+            line.unwrap()
+        };
+
         if self.re.is_none() {
             let r = format!(r"XXX");
             self.re = Some(Regex::new(&r).unwrap());
