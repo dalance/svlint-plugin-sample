@@ -1,5 +1,5 @@
 use svlint::config::ConfigOption;
-use svlint::linter::{TextRule, TextRuleResult};
+use svlint::linter::{TextRule, TextRuleEvent, TextRuleResult};
 use regex::Regex;
 
 #[derive(Default)]
@@ -10,9 +10,16 @@ pub struct ForbiddenRegex {
 impl TextRule for ForbiddenRegex {
     fn check(
         &mut self,
-        line: &str,
+        event: TextRuleEvent,
         _option: &ConfigOption,
     ) -> TextRuleResult {
+        let line: &str = match event {
+            TextRuleEvent::StartOfFile => {
+                return TextRuleResult::Pass;
+            }
+            TextRuleEvent::Line(x) => x,
+        };
+
         if self.re.is_none() {
             let r = format!(r"XXX");
             self.re = Some(Regex::new(&r).unwrap());
